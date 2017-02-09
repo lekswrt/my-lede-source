@@ -337,6 +337,7 @@ platform_check_image() {
 	ls-sr71|\
 	pb42|\
 	pb44|\
+	rb-750up-r2|\
 	rb-941-2nd|\
 	rb-951ui-2nd|\
 	rb-mapl-2nd|\
@@ -610,6 +611,7 @@ platform_pre_upgrade() {
 	local board=$(ar71xx_board_name)
 
 	case "$board" in
+	rb-750up-r2|\
 	rb-941-2nd|\
 	rb-951ui-2nd|\
 	rb-mapl-2nd)
@@ -648,6 +650,7 @@ platform_do_upgrade() {
 	local board=$(ar71xx_board_name)
 
 	case "$board" in
+	rb-750up-r2|\
 	rb-941-2nd|\
 	rb-951ui-2nd|\
 	rb-mapl-2nd)
