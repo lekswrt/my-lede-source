@@ -628,6 +628,7 @@ platform_check_image() {
 	rb-750up-r2|\
 	rb-941-2nd|\
 	rb-951ui-2nd|\
+	rb-lhg-5nd|\
 	rb-mapl-2nd)
 		return 0
 		;;
@@ -679,6 +680,7 @@ platform_pre_upgrade() {
 	rb-750up-r2|\
 	rb-941-2nd|\
 	rb-951ui-2nd|\
+	rb-lhg-5nd|\
 	rb-mapl-2nd)
 		# erase firmware if booted from initramfs
 		[ -z "$(rootfs_type)" ] && mtd erase firmware
