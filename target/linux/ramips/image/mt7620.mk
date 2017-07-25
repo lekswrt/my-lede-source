@@ -2,7 +2,7 @@
 # MT7620A Profiles
 #
 
-DEVICE_VARS += TPLINK_BOARD_ID
+DEVICE_VARS += TPLINK_BOARD_ID TPLINK_FLASHLAYOUT TPLINK_HEADER_VERSION TPLINK_HWID TPLINK_HWREV
 
 define Build/elecom-header
 	cp $@ $(KDIR)/v_0.0.0.bin
@@ -340,6 +340,36 @@ define Device/psg1218b
   SUPPORTED_DEVICES += psg1218
 endef
 TARGET_DEVICES += psg1218b
+
+define Build/tplink-v1-image
+        -$(STAGING_DIR_HOST)/bin/mktplinkfw \
+                -H $(TPLINK_HWID) -W $(TPLINK_HWREV) -F $(TPLINK_FLASHLAYOUT) \
+                -m $(TPLINK_HEADER_VERSION) \
+                -k $(IMAGE_KERNEL) \
+                -r $(IMAGE_ROOTFS) \
+                -j -a 0x4 \
+                -o $@.new $(1)
+	@mv $@.new $@
+endef
+
+define Device/re210-v1
+  DTS := RE210
+  TPLINK_BOARD_ID := RE210-V1
+  TPLINK_HEADER_VERSION := 1
+  TPLINK_HWID := 0x02100001
+  TPLINK_HWREV := 0x1
+  TPLINK_FLASHLAYOUT := 8Mlzma
+  IMAGE_SIZE := 8258048
+  IMAGES += factory.bin
+  DEVICE_TITLE := TP-LINK RE210 v1
+  DEVICE_PACKAGES := kmod-mt7603 kmod-mt76x2 wpad-mini
+  KERNEL := $(KERNEL_DTB)
+  KERNEL_INITRAMFS := $(KERNEL_DTB) | tplink-v1-header -e
+  LOADER_TYPE := gz
+  IMAGE/factory.bin := tplink-v1-image -e
+  IMAGE/sysupgrade.bin := tplink-v1-image -e -s | append-metadata
+endef
+TARGET_DEVICES += re210-v1
 
 define Device/rp-n53
   DTS := RP-N53

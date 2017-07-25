@@ -308,6 +308,9 @@ r6220)
 	set_wifi_led "$board:green:wifi"
 	set_usb_led "$board:green:usb"
 	;;
+re210-v1)
+	ucidef_set_led_netdev "wlan2g" "wlan2g" "$board:green:wlan2g" "wlan0"
+	;;
 re6500)
 	ucidef_set_led_default "power" "power" "$board:white:power" "1"
 	ucidef_set_led_default "wifi" "wifi" "$board:orange:wifi" "1"
