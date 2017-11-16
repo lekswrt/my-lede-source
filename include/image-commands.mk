@@ -16,7 +16,7 @@ define Build/netgear-chk
 		-o $@.new \
 		-k $@ \
 		-b $(NETGEAR_BOARD_ID) \
-		-r $(NETGEAR_REGION)
+		$(if $(NETGEAR_REGION),-r $(NETGEAR_REGION),)
 	mv $@.new $@
 endef
 
